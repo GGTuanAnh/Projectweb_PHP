@@ -42,12 +42,16 @@ class CategorySeeder extends Seeder
         ];
 
         foreach ($categories as $category) {
-            Category::create([
-                'name' => $category['name'],
-                'slug' => Str::slug($category['name']),
-                'description' => $category['description'],
-                'image' => $category['image'],
-            ]);
+            // Kiểm tra xem danh mục đã tồn tại chưa (dựa trên slug)
+            $slug = Str::slug($category['name']);
+            if (!Category::where('slug', $slug)->exists()) {
+                Category::create([
+                    'name' => $category['name'],
+                    'slug' => $slug,
+                    'description' => $category['description'],
+                    'image' => $category['image'],
+                ]);
+            }
         }
     }
 }
