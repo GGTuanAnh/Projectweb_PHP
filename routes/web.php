@@ -35,9 +35,19 @@ Route::post('/register', [AuthController::class, 'register']);
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 // Admin Routes
-Route::prefix('admin')->middleware(['auth'])->group(function () {
+Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
     Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
     Route::get('/products', [AdminController::class, 'products'])->name('admin.products');
     Route::get('/categories', [AdminController::class, 'categories'])->name('admin.categories');
     Route::get('/orders', [AdminController::class, 'orders'])->name('admin.orders');
+});
+
+// Staff Routes
+Route::prefix('staff')->middleware(['auth', 'staff'])->group(function () {
+    Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('staff.dashboard');
+});
+
+// Routes cho cả Admin và Staff
+Route::prefix('manage')->middleware(['auth', 'admin.or.staff'])->group(function () {
+    Route::get('/orders', [AdminController::class, 'orders'])->name('manage.orders');
 });
