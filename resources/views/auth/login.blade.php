@@ -5,7 +5,7 @@
     <div class="row justify-content-center">
         <div class="col-md-6">
             <div class="card shadow">
-                <div class="card-header bg-primary text-white">
+                <div class="card-header" style="background-color: #6f4e37; color: white;">
                     <h5 class="mb-0">Đăng nhập</h5>
                 </div>
                 <div class="card-body p-4">
@@ -34,7 +34,7 @@
                         </div>
                         
                         <div class="d-grid">
-                            <button type="submit" class="btn btn-primary btn-lg">Đăng nhập</button>
+                            <button type="submit" class="btn btn-lg" style="background-color: #6f4e37; color: white;">Đăng nhập</button>
                         </div>
                         
                         <div class="mt-3 text-center">

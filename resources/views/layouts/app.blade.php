@@ -54,6 +54,28 @@
             color: #ffd700;
         }
         
+        .dropdown-menu {
+            background-color: #6f4e37;
+            border: none;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            padding: 0.5rem 0;
+        }
+        
+        .dropdown-item {
+            color: white;
+            padding: 0.5rem 1.5rem;
+            font-size: 0.9rem;
+        }
+        
+        .dropdown-item:hover, .dropdown-item:focus {
+            background-color: #8b6b4c;
+            color: #ffd700;
+        }
+        
+        .nav-item.dropdown {
+            position: relative;
+        }
+        
         .hero {
             background-image: url('/images/cafe-hero.jpg');
             background-size: cover;
@@ -243,9 +265,11 @@
                         <li><a href="{{ route('login') }}">Đăng nhập</a></li>
                         <li><a href="{{ route('register') }}">Đăng ký</a></li>
                     @else
-                        <li>
-                            <a href="#" class="dropdown-toggle" data-bs-toggle="dropdown">{{ Auth::user()->name }}</a>
-                            <ul class="dropdown-menu dropdown-menu-end">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                {{ Auth::user()->name }}
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
                                 @if(Auth::user()->isAdminOrStaff())
                                     <li><a class="dropdown-item" href="{{ route('admin.dashboard') }}">Quản trị</a></li>
                                 @endif
