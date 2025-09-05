@@ -1,61 +1,140 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+<h1 align="center">CafeShop Platform</h1>
+<p align="center">Backend API (Laravel 12 + Sanctum) & Frontend SPA (Vue 3 + Vite)</p>
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## 🇻🇳 Giới thiệu
+CafeShop là ứng dụng quản lý & hiển thị thực đơn quán cà phê với:
+- API chuẩn REST (version: v1)
+- Xác thực token qua Laravel Sanctum
+- Phân tách Frontend (Vue 3 SPA) & Backend
+- Dữ liệu seed tiếng Việt: danh mục & sản phẩm đa dạng
+- Tìm kiếm, lọc theo danh mục, phân trang
 
-## About Laravel
+## 🗂 Cấu trúc chính
+```
+CafeShop/
+	app/              -> Mã nguồn Laravel (Models, Controllers, Resources)
+	routes/api.php    -> Định nghĩa API v1
+	config/cors.php   -> Cấu hình CORS cho frontend
+	frontend/         -> Vue 3 SPA (Vite)
+	database/seeders/ -> CategorySeeder, ProductSeeder
+```
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## 🚀 Khởi chạy nhanh (Development)
+Yêu cầu: PHP ^8.2, Composer, Node.js (>=18), SQLite hoặc MySQL (đang dùng SQLite mặc định).
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+### 1. Backend
+```bash
+composer install
+cp .env.example .env    # nếu chưa có
+php artisan key:generate
+php artisan migrate --seed
+php artisan serve       # http://127.0.0.1:8000
+```
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### 2. Frontend
+```bash
+cd frontend
+npm install
+npm run dev             # http://localhost:5173
+```
+Frontend proxy tự động chuyển yêu cầu `/api` tới `http://127.0.0.1:8000` (cấu hình trong `frontend/vite.config.js`).
 
-## Learning Laravel
+## 🔐 Xác thực
+Endpoint đăng nhập:
+```
+POST /api/v1/auth/login
+Body: { "email": "test@example.com", "password": "password" }
+```
+Phản hồi thành công trả về token Bearer. Lưu token (localStorage) và gửi kèm:
+```
+Authorization: Bearer <token>
+```
+Đăng xuất: `POST /api/v1/auth/logout` (cần kèm token).
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## 📡 API chính (v1)
+| Phương thức | Endpoint | Mô tả |
+|-------------|----------|-------|
+| GET | /api/v1/categories | Danh sách danh mục |
+| GET | /api/v1/products | Danh sách sản phẩm (filter: category, search, page) |
+| GET | /api/v1/products/{id} | Chi tiết sản phẩm |
+| POST | /api/v1/auth/login | Đăng nhập lấy token |
+| POST | /api/v1/auth/logout | Hủy token |
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+Ví dụ lấy sản phẩm với lọc:
+```
+/api/v1/products?category=cafe-viet&search=sua&page=2
+```
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## 🧱 Chuẩn JSON (Resources)
+Mẫu `ProductResource`:
+```json
+{
+	"data": {
+		"id": 12,
+		"name": "Cà phê sữa đá",
+		"slug": "ca-phe-sua-da",
+		"price": 32000,
+		"stock": 50,
+		"category": { "id": 1, "name": "Cà phê", "slug": "cafe" }
+	},
+	"meta": { }
+}
+```
 
-## Laravel Sponsors
+Phân trang (list):
+```json
+{
+	"data": [ ... ],
+	"meta": {
+		"current_page": 1,
+		"last_page": 8,
+		"per_page": 15,
+		"total": 120
+	}
+}
+```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+## 🧪 Lệnh hữu ích
+```bash
+php artisan route:list --path=api
+php artisan migrate:fresh --seed
+php artisan tinker
+```
 
-### Premium Partners
+## 🎯 Roadmap (dự kiến)
+- [ ] Giỏ hàng & đơn hàng (API)
+- [ ] Phân quyền nâng cao (admin/staff/customer)
+- [ ] Bộ lọc nâng cao (giá, đánh giá)
+- [ ] Cache Redis cho danh mục/sản phẩm phổ biến
+- [ ] Unit test API (Pest / PHPUnit)
+- [ ] Triển khai Docker compose
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+## 🌐 Triển khai production (gợi ý)
+1. Build frontend: `cd frontend && npm run build` (tạo `dist/`)
+2. Serve frontend tĩnh (Nginx) và proxy `/api` đến PHP-FPM
+3. Thiết lập biến môi trường APP_ENV=production, APP_KEY, cache config:
+```bash
+php artisan config:cache
+php artisan route:cache
+php artisan view:cache
+```
 
-## Contributing
+## 🤝 Đóng góp
+Tạo branch mới: `feat/<ten-tinh-nang>` rồi mở Pull Request.
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+## 📄 License
+MIT.
 
-## Code of Conduct
+---
+English brief below.
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+## 🇬🇧 Overview (Brief)
+CafeShop: Laravel 12 REST API + Vue 3 SPA (menu, search, category filters, auth via Sanctum). Seeded Vietnamese coffee shop dataset. Frontend consumes `/api/v1/*` endpoints via Vite proxy.
 
-## Security Vulnerabilities
+Key commands:
+```bash
+composer install && php artisan migrate --seed && php artisan serve
+cd frontend && npm install && npm run dev
+```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+Enjoy building! ☕
