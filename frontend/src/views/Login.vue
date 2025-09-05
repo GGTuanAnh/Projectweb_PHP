@@ -1,15 +1,17 @@
 <template>
-  <div class="container auth">
-    <h2>Đăng nhập</h2>
-    <form @submit.prevent="login">
-      <label>Email
-        <input v-model="email" type="email" required />
-      </label>
-      <label>Mật khẩu
-        <input v-model="password" type="password" required />
-      </label>
-      <button :disabled="loading">{{ loading ? 'Đang xử lý...' : 'Đăng nhập' }}</button>
-      <p v-if="error" class="error">{{ error }}</p>
+  <div class="max-w-sm mx-auto bg-white/80 dark:bg-stone-900/70 backdrop-blur border border-stone-200 dark:border-stone-700 p-6 rounded-xl shadow-soft">
+    <h1 class="text-xl font-semibold mb-5 flex items-center gap-2">🔐 <span>Đăng nhập</span></h1>
+    <form @submit.prevent="login" class="space-y-5">
+      <div>
+        <label class="block text-sm font-medium mb-1">Email</label>
+        <input v-model="email" type="email" required class="w-full border dark:border-stone-600 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-brand/40 bg-white dark:bg-stone-800" />
+      </div>
+      <div>
+        <label class="block text-sm font-medium mb-1">Mật khẩu</label>
+        <input v-model="password" type="password" required class="w-full border dark:border-stone-600 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-brand/40 bg-white dark:bg-stone-800" />
+      </div>
+      <button :disabled="loading" class="btn-primary w-full justify-center shadow-soft" type="submit">{{ loading ? 'Đang xử lý...' : 'Đăng nhập' }}</button>
+      <p v-if="error" class="text-sm text-red-500">{{ error }}</p>
     </form>
   </div>
 </template>

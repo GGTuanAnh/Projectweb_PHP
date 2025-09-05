@@ -1,11 +1,20 @@
 <!doctype html>
-<html lang="vi">
+<html lang="vi" class="light">
   <head>
     <meta charset="UTF-8" />
     <title>CafeShop Frontend</title>
     <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="theme-color" content="#8B5E34" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+      // Persist dark mode preference
+      const mode = localStorage.getItem('theme');
+      if(mode === 'dark') document.documentElement.classList.add('dark');
+    </script>
   </head>
-  <body>
+  <body class="min-h-screen bg-gradient-to-br from-stone-100 via-white to-stone-200 dark:from-stone-900 dark:via-stone-950 dark:to-stone-900">
     <div id="app"></div>
     <script type="module" src="/src/main.js"></script>
   </body>

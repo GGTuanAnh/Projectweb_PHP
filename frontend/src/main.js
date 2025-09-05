@@ -5,6 +5,7 @@ import App from './App.vue';
 import axios from 'axios';
 
 import './style.css';
+import './assets/tailwind.css';
 
 // Restore token if exists
 const token = localStorage.getItem('token');
