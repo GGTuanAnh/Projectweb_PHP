@@ -13,19 +13,19 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained()->cascadeOnDelete();
-            $table->string('name');
-            $table->string('phone');
-            $table->text('address');
+            $table->foreignId('user_id')->nullable()->constrained()->nullOnDelete();
+            $table->string('customer_name');
+            $table->string('customer_email')->nullable();
+            $table->string('customer_phone')->nullable();
+            $table->text('address')->nullable();
             $table->string('order_number')->unique();
-            $table->enum('status', ['pending', 'processing', 'shipping', 'completed', 'cancelled'])->default('pending');
+            $table->enum('status', ['pending', 'processing', 'completed', 'cancelled'])->default('pending');
             $table->decimal('total_amount', 10, 2);
-            $table->enum('payment_method', ['cash', 'card', 'momo', 'zalopay'])->nullable();
+            $table->decimal('tax_amount', 10, 2)->default(0);
+            $table->enum('payment_method', ['cash', 'credit_card', 'bank_transfer', 'online'])->default('cash');
             $table->enum('payment_status', ['pending', 'paid', 'failed'])->default('pending');
-            $table->text('note')->nullable();
-            $table->timestamp('paid_at')->nullable();
-            $table->timestamp('completed_at')->nullable();
-            $table->timestamp('cancelled_at')->nullable();
+            $table->text('notes')->nullable();
+            $table->integer('table_number')->nullable();
             $table->timestamps();
         });
     }

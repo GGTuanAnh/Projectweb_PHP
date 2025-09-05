@@ -112,7 +112,7 @@
                                     <td>
                                         <div class="d-flex px-2 py-1">
                                             <div>
-                                                <img src="{{ asset($product->image ?? 'images/default-product.jpg') }}" class="avatar avatar-sm me-3" alt="{{ $product->name }}">
+                                                <img src="{{ asset($product->image) }}" class="avatar avatar-sm me-3" alt="{{ $product->name }}">
                                             </div>
                                             <div class="d-flex flex-column justify-content-center">
                                                 <h6 class="mb-0 text-sm">{{ $product->name }}</h6>

@@ -15,29 +15,34 @@ class CategorySeeder extends Seeder
     {
         $categories = [
             [
-                'name' => 'Hot Coffee',
-                'description' => 'Delicious hot coffee drinks to warm you up',
-                'image' => 'hot-coffee.jpg',
+                'name' => 'Đồ uống cà phê',
+                'description' => 'Các loại cà phê pha phin, espresso, latte, cappuccino, cold brew...',
+                'image' => 'coffee.jpg',
             ],
             [
-                'name' => 'Cold Coffee',
-                'description' => 'Refreshing cold coffee drinks for hot days',
-                'image' => 'cold-coffee.jpg',
+                'name' => 'Trà & Trà sữa',
+                'description' => 'Trà hoa quả, trà sữa, matcha latte, trà thảo mộc...',
+                'image' => 'tea-milk-tea.jpg',
             ],
             [
-                'name' => 'Pastries',
-                'description' => 'Freshly baked pastries to complement your coffee',
-                'image' => 'pastries.jpg',
+                'name' => 'Đồ uống khác',
+                'description' => 'Nước ép, sinh tố, smoothie, soda Ý, sữa...',
+                'image' => 'other-drinks.jpg',
             ],
             [
-                'name' => 'Desserts',
-                'description' => 'Sweet treats and desserts',
+                'name' => 'Bánh & Đồ ngọt',
+                'description' => 'Bánh ngọt, bánh Âu, mousse, tiramisu, cookies...',
                 'image' => 'desserts.jpg',
             ],
             [
-                'name' => 'Tea',
-                'description' => 'Various tea options for tea lovers',
-                'image' => 'tea.jpg',
+                'name' => 'Đồ ăn nhẹ & ăn sáng',
+                'description' => 'Sandwich, mì ý, salad, bánh bao, ngũ cốc...',
+                'image' => 'light-meals.jpg',
+            ],
+            [
+                'name' => 'Sản phẩm mang về',
+                'description' => 'Cà phê hạt, trà khô, syrup, cold brew đóng chai...',
+                'image' => 'takeaway.jpg',
             ],
         ];
 

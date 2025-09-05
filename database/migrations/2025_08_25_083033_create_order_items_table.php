@@ -14,11 +14,14 @@ return new class extends Migration
         Schema::create('order_items', function (Blueprint $table) {
             $table->id();
             $table->foreignId('order_id')->constrained()->onDelete('cascade');
-            $table->foreignId('product_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('menu_item_id')->nullable()->constrained()->nullOnDelete();
+            $table->foreignId('product_id')->nullable()->constrained()->nullOnDelete();
+            $table->string('name');
             $table->integer('quantity');
-            $table->decimal('price', 10, 2);
-            $table->json('options')->nullable();
-            $table->text('note')->nullable();
+            $table->decimal('unit_price', 10, 2);
+            $table->decimal('subtotal', 10, 2);
+            $table->text('notes')->nullable();
+            $table->enum('status', ['pending', 'preparing', 'ready', 'served', 'cancelled'])->default('pending');
             $table->timestamps();
         });
     }
