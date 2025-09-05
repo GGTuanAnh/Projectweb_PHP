@@ -112,6 +112,27 @@ return [
             // 'trust_server_certificate' => env('DB_TRUST_SERVER_CERTIFICATE', 'false'),
         ],
 
+        // Secondary MySQL (analytics / reporting) connection for data replication & trực quan hóa
+        'analytics_mysql' => [
+            'driver' => 'mysql',
+            'url' => env('ANALYTICS_DB_URL'),
+            'host' => env('ANALYTICS_DB_HOST', env('DB_HOST', '127.0.0.1')),
+            'port' => env('ANALYTICS_DB_PORT', env('DB_PORT', '3306')),
+            'database' => env('ANALYTICS_DB_DATABASE', 'cafeshop_analytics'),
+            'username' => env('ANALYTICS_DB_USERNAME', env('DB_USERNAME', 'root')),
+            'password' => env('ANALYTICS_DB_PASSWORD', env('DB_PASSWORD', '')),
+            'unix_socket' => env('ANALYTICS_DB_SOCKET', ''),
+            'charset' => env('ANALYTICS_DB_CHARSET', 'utf8mb4'),
+            'collation' => env('ANALYTICS_DB_COLLATION', 'utf8mb4_unicode_ci'),
+            'prefix' => env('ANALYTICS_DB_PREFIX', ''),
+            'prefix_indexes' => true,
+            'strict' => true,
+            'engine' => null,
+            'options' => extension_loaded('pdo_mysql') ? array_filter([
+                PDO::MYSQL_ATTR_SSL_CA => env('ANALYTICS_MYSQL_ATTR_SSL_CA'),
+            ]) : [],
+        ],
+
     ],
 
     /*
